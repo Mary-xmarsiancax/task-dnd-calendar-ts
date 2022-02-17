@@ -1,0 +1,27 @@
+.header-wr {
+    background-color: rgb(224 243 249);
+}
+
+.header-wr .header-text {
+    font-size: medium;
+    color: dimgrey;
+}
+
+.header-wr .header-text-to-do {
+    margin-left: 650px;
+    font-weight: bold;
+}
+
+.header-wr .header-text-login {
+    margin-left: 470px;
+}
+
+.header-wr .header-text-registration {
+    margin-left: 20px;
+}
+
+.header-wr a{
+    text-decoration: none;
+    color: dimgrey;
+}
+

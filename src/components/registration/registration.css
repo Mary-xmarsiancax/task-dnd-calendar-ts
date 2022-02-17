@@ -1,0 +1,19 @@
+.registration-wr {
+    position: relative;
+}
+
+.registration-wr img {
+    margin-left: 350px;
+}
+
+.registration-wr .motto {
+    text-align: center;
+    color: dimgrey;
+}
+
+.registration-wr .registration-form-block {
+    position: absolute;
+    right: 60px;
+    top: 30px
+
+}
