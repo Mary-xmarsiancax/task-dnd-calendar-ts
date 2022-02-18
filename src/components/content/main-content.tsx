@@ -1,11 +1,11 @@
-import Registration from "../registration/registration"
+import Login from "../login/login"
 const MainContent = () => {
     return (
         <div>
             {/*<StartContent/>*/}
             {/*<TasksContent/>*/}
-            <Registration/>
-            {/*<Login/>*/}
+            {/*<Registration/>*/}
+            <Login/>
         </div>
     )
 }

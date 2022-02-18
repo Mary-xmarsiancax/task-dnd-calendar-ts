@@ -1,0 +1,24 @@
+.footer-wr {
+    background-color: rgb(224 243 249);
+    min-height: 150px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 45px;
+}
+
+.footer-wr ol li {
+    list-style: none;
+    font-size: 12px;
+}
+
+.footer-wr .footer-moto {
+    max-width: 350px;
+}
+
+.footer-wr .footer-items {
+    display: flex;
+}
+
+.footer-wr h5 {
+    text-align: center;
+}

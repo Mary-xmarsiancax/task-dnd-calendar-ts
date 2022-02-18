@@ -1,6 +1,6 @@
 import {Alert,Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
-import "./registrationForm.css"
+import "./registration-form.css"
 
 const RegistrationForm = () => {
     const {register, handleSubmit, formState: {errors}} = useForm()

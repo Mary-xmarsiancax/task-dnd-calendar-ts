@@ -1,6 +1,6 @@
 import registrationImg from "../../img/start-img.jpg";
 import "./registration.css"
-import RegistrationForm from "./registrationForm";
+import RegistrationForm from "./registration-form";
 
 const Registration = () => {
     return (
@@ -10,7 +10,6 @@ const Registration = () => {
             <div className="registration-form-block">
                 <RegistrationForm/>
             </div>
-
         </div>
     )
 }
