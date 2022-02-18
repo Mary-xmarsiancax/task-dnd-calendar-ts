@@ -8,11 +8,12 @@
 
 .footer-wr ol li {
     list-style: none;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .footer-wr .footer-moto {
     max-width: 350px;
+    margin-top: 45px;
 }
 
 .footer-wr .footer-items {
