@@ -1,12 +1,20 @@
-import {Alert,Button, TextField} from "@mui/material";
+import {Alert, Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import "./login-form.css"
+import {DataFormType} from "../registration/registration-form";
+
+
 
 const LoginForm = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {register, handleSubmit, formState: {errors}} = useForm<DataFormType>()
+
+    const onSubmit = (data: DataFormType): void => {
+        console.log(data);
+    }
+
     return (
         <div>
-            <form className="registration-form-wr">
+            <form onSubmit={handleSubmit(onSubmit)} className="registration-form-wr">
                 <div className="userName">
                     <TextField id="username" label="username" variant="outlined"  {...register("username",
                         {
@@ -25,7 +33,8 @@ const LoginForm = () => {
                     <Alert severity="info">Min length not reached</Alert>}
                 </div>
                 <div className="password">
-                    <TextField id="password" label="password" variant="outlined" type="password" {...register("password",
+                    <TextField id="password" label="password" variant="outlined"
+                               type="password" {...register("password",
                         {
                             required: true,
                             maxLength: 25,
@@ -42,8 +51,8 @@ const LoginForm = () => {
                     <Alert severity="info">Min length not reached</Alert>}
                 </div>
                 <div className="repeatPasswordErrorsSpan">
-                    {/*{props.registrationTextError &&*/}
-                    {/*<Alert severity="warning">{props.registrationTextError}</Alert>*/}
+                    {/*{props.loginTextError &&*/}
+                    {/*<Alert severity="warning">{props.loginTextErrorTextError}</Alert>*/}
                     {/*}*/}
                     {/*{!isIdenticalPasswords &&*/}
                     {/*<Alert className={s.isIdenticalErrorsSpan} severity="warning">This passwords not identical</Alert>*/}

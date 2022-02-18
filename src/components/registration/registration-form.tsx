@@ -2,11 +2,16 @@ import {Alert,Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import "./registration-form.css"
 
+export type DataFormType = { username: string, password: string };
+
 const RegistrationForm = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {register, handleSubmit, formState: {errors}} = useForm<DataFormType>()
+    const onSubmit = (data: DataFormType): void => {
+        console.log(data);
+    }
     return (
         <div>
-            <form className="registration-form-wr">
+            <form onSubmit={handleSubmit(onSubmit)} className="registration-form-wr">
                 <div className="userName">
                     <TextField id="username" label="username" variant="outlined"  {...register("username",
                         {
