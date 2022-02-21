@@ -1,10 +1,15 @@
 .header-wr {
     background-color: rgb(224 243 249);
+    display: flex;
+    justify-content: space-between;
 }
 
 .header-wr .header-text {
     font-size: medium;
     color: dimgrey;
+}
+.header-wr .auth-text{
+   margin-right: 80px;
 }
 
 .header-wr .header-text-to-do {
@@ -13,11 +18,11 @@
 }
 
 .header-wr .header-text-login {
-    margin-left: 470px;
+   margin-right: 30px;
 }
 
 .header-wr .header-text-registration {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 
 .header-wr a{

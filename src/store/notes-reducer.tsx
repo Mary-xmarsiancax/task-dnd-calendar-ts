@@ -7,7 +7,7 @@ let initialState: {notes: Array<Note>} = {
     notes: []
 }
 
-const notesReducer = (state = initialState, action) => {
+const notesReducer = (state = initialState, action:any) => {//actions all different
     switch (action.type) {
         case addNote: {
 

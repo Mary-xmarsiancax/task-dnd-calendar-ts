@@ -6,8 +6,8 @@ export type Note = {
     backgroundColor: string
 }
 
-export type Current = {
-    id: number,
+export type AuthData = {
+    id: number | null,
     username: string
 }
 
@@ -15,10 +15,12 @@ export type LoginForm = {
     username: string,
     password: string
 }
-export type UserResponse = {
+
+export type UserResponseData = {
     id: number,
     username: string,
     token: string
 }
+
 
 
