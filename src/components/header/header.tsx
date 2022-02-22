@@ -1,32 +1,34 @@
 import "./header.css"
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/redux-store";
-import {usersApi} from "../../servises/api";
+import {setAuthorizationHeader, usersApi} from "../../servises/api";
 import {getCurrentUsersData} from "../../store/auth-reducer";
 import {Button} from "@mui/material";
+import {useEffect} from "react";
 
 
 const Header = () => {
     const dispatch = useDispatch()
     const username = useSelector<AppState>((state) => state.authStore.username) as string;
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            dispatch(getCurrentUsersData())
+            navigate('/tasksContent', {replace: true})
+        } else {
+            navigate('/login', {replace: true})
+        }
+    }, [username])
+
     const onLogout = () => {
         usersApi.usersLogout()
         dispatch(getCurrentUsersData())
-        // usersApi.getCurrentUser()
-        //     .then(response => {
-        //         dispatch(setRegistrationData({...response.data}));
-        //     }, err => {
-        //         setAuthorizationHeader("");
-        //         navigate('/login', {replace: true})
-        //         dispatch(setRegistrationData(
-        //             {
-        //                 id: null,
-        //                 username: ""
-        //             })
-        //         )
-        //     })
-    }
+        if (!localStorage.getItem("token")){
+            navigate('/login', {replace: true})
+        }
+            }
+
     return (
         <div className="header-wr">
             <div className="header-text header-text-to-do">

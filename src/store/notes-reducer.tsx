@@ -1,21 +1,36 @@
 import {Note} from "../servises/api-types";
+import {notesApi} from "../servises/api";
 
-const ADD_NOTE = "ADD-NOTE"
-export const addNote = (note: Note) => ({type: ADD_NOTE, payload: note})
 
-let initialState: {notes: Array<Note>} = {
-    notes: []
+const actions = {
+    setNotes: (notes: Note) => ({type: "SET_NOTES", notes}),
 }
 
-const notesReducer = (state = initialState, action:any) => {//actions all different
-    switch (action.type) {
-        case addNote: {
+let initialState: { notes: Array<Note>} = {
+    notes: [],
+}
 
-            state.notes.push(action.payload)
-            return
+const notesReducer = (state = initialState, action: any) => {
+    switch (action.type) {
+        case "SET_NOTES": {
+            let copyState = {...state}
+            copyState.notes = action.notes
+            return copyState
         }
         default:
             return state;
     }
+}
+
+//thunks
+
+export const setNewTask = (text: string) => (dispatch: any) => {
+    notesApi.setNotes(text)
+        .then(response => {
+            notesApi.getNotes()
+                .then(response => {
+                    dispatch(actions.setNotes)
+                })
+        })
 }
 export default notesReducer;

@@ -42,8 +42,8 @@ export const notesApi = {
     getNotes(): Promise<AxiosResponse<Array<Note>>> {
         return instance.get(`/notes`)//:Array<ResponsesNotesGet>
     },
-    setNotes(): Promise<Note> {
-        return instance.post(`/notes`, {text: ""})
+    setNotes(text:string): Promise<Note> {
+        return instance.post(`/notes`, {text: text})
     },
     updateNotes(text: string, id: number): Promise<AxiosResponse<Note>> {
         return instance.put(`/notes`, {text: text, id: id})
