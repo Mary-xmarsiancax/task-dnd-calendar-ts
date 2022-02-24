@@ -3,6 +3,7 @@ import "./tasks-content.css"
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {setNewTask} from "../../../store/notes-reducer";
+import DndContextComponent from "../../dnd/DndContextComponent";
 
 const TasksContent = () => {
     let [inputsText, setInputsText] = useState("")
@@ -12,8 +13,8 @@ const TasksContent = () => {
         setInputsText(e.target.value)
     }
 
-    const onAddTask = (inputsText: string):void => {
-        dispatch(setNewTask(inputsText))
+    const onAddTask = (text: string):void => {
+        dispatch(setNewTask(text))
     }
 
     return (
@@ -34,20 +35,14 @@ const TasksContent = () => {
                     <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
                     </IconButton>
                     <Divider sx={{height: 28, m: 0.5}} orientation="vertical"/>
-                    <IconButton color="primary" sx={{p: '10px'}} aria-label="directions">
-                        <Button className="button-go" onClick={()=>onAddTask(inputsText)}>GO</Button>
+                    <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={()=>onAddTask(inputsText)}>GO
                     </IconButton>
                 </Paper>
             </div>
-            <div>tasks map zone</div>
-            <div>weeks days
-                <div>пн</div>
-                <div>вт</div>
-                <div>ср</div>
-                <div>чт</div>
-                <div>пт</div>
-                <div>сб</div>
+            <div className="dnd-wr">
+                <DndContextComponent/>
             </div>
+            
         </div>
     )
 }

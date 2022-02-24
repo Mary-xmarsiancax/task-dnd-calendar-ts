@@ -2,8 +2,6 @@
     width: 1300px;
     margin-left: 80px;
 }
-
-.tasks-wr .button-go {
-    border: solid dimgrey 1px;
-    border-radius: 150px;
+.tasks-wr .dnd-wr{
+    min-height: 510px;
 }

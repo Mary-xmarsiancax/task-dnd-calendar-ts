@@ -9,7 +9,7 @@ export const actions = {
     setRegistrationErrorsText: (text: string) => ({type: "SET_REGISTRATION_ERRORS_TEXT", text} as const),
     setLoginErrorsText: (text: string) => ({type: "SET_LOGIN_ERRORS_TEXT", text} as const)
 }
-type ActionsType = InferActionsTypes<typeof actions>
+type AuthActionsType = InferActionsTypes<typeof actions>
 
 type Errors = {
     loginTextError: string
@@ -23,8 +23,7 @@ let initialState: AuthData & Errors = {
     registrationTextError: ""
 }
 
-
-const authReducer = (state = initialState, action: ActionsType) => {
+const authReducer = (state = initialState, action: AuthActionsType) => {
     switch (action.type) {
         case "SET_REGISTRATION_DATA": {
             let copyState = {...state}

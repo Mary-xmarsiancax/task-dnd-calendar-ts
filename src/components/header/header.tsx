@@ -2,7 +2,7 @@ import "./header.css"
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/redux-store";
-import {setAuthorizationHeader, usersApi} from "../../servises/api";
+import {usersApi} from "../../servises/api";
 import {getCurrentUsersData} from "../../store/auth-reducer";
 import {Button} from "@mui/material";
 import {useEffect} from "react";
@@ -24,10 +24,10 @@ const Header = () => {
     const onLogout = () => {
         usersApi.usersLogout()
         dispatch(getCurrentUsersData())
-        if (!localStorage.getItem("token")){
+        if (!localStorage.getItem("token")) {
             navigate('/login', {replace: true})
         }
-            }
+    }
 
     return (
         <div className="header-wr">
