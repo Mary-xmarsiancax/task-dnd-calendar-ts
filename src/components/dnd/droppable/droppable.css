@@ -1,6 +1,18 @@
-.droppable-wr{
-    width: 400px;
-    border: solid 1px cornflowerblue;
-    border-radius: 20px;
-    margin: 35px 0 0 45px;
+.droppable-component-wr {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.droppable-el {
+    min-width: 20px;
+    min-height: 300px;
+    background-color: lightgray;
+    margin: 25px 5px 0 5px;
+    text-align: center;
+}
+
+.draggable-wr {
+background-color: dimgrey;
+    min-width: 17px;
+    margin: 1px 5px 3px 5px;
 }

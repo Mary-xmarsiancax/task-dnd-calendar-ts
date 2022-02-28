@@ -6,6 +6,7 @@ import {usersApi} from "../../servises/api";
 import {getCurrentUsersData} from "../../store/auth-reducer";
 import {Button} from "@mui/material";
 import {useEffect} from "react";
+import {getNotes} from "../../store/notes-reducer";
 
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
             navigate('/login', {replace: true})
         }
     }, [username])
+
 
     const onLogout = () => {
         usersApi.usersLogout()

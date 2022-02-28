@@ -2,14 +2,16 @@ import {Alert, Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import "./login-form.css"
 import {DataFormType} from "../registration/registration-form";
-
-
+import {usersApi} from "../../servises/api";
+import {setUsersData} from "../../store/auth-reducer";
+import {useDispatch} from "react-redux";
 
 const LoginForm = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<DataFormType>()
+    const dispatch = useDispatch()
 
     const onSubmit = (data: DataFormType): void => {
-        console.log(data);
+        dispatch(setUsersData(data, usersApi.usersLogin))
     }
 
     return (

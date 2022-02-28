@@ -4,6 +4,7 @@ import "./registration-form.css"
 import {setUsersData} from "../../store/auth-reducer";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import {usersApi} from "../../servises/api";
 
 export type DataFormType = { username: string, password: string, repeatPassword: string };
 
@@ -13,7 +14,7 @@ const RegistrationForm = () => {
     const [isIdenticalPasswords, setNotIdentical] = useState(true)
     const onSubmit = (data: DataFormType): void => {
         if (data.password === data.repeatPassword) {
-            dispatch(setUsersData(data));
+            dispatch(setUsersData(data,usersApi.usersRegistration));
         } else {
             setNotIdentical(false)
         }
