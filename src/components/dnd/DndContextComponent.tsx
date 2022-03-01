@@ -9,7 +9,7 @@ const DndContextComponent = () => {
     const dispatch = useDispatch()
 
     const onDragEnd = (result: any) => {
-        console.log(result);
+        console.log("result.destination",result.destination);
         if (!result.destination) {
             return;
         }
@@ -19,8 +19,8 @@ const DndContextComponent = () => {
         // }
         else {
             dispatch(setItems(result.source.index, result.destination.index))
-            debugger
         }
+        console.log("result", result);
     }
 
     return (

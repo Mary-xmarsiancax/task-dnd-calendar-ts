@@ -21,15 +21,16 @@ const DroppableComponent = () => {
             {Object.entries(state).map((arr, index) =>
                 <div className="droppable-el" key={arr[0]}>
                     <h4>{DAYS_OF_WEEK[arr[0]]}</h4>
-                    {(arr[1] as Array<Note>).map((el: Note, index: number) =>
-                        <Droppable droppableId="droppableId" key={el.id}>
+
+                        <Droppable droppableId={arr[0].toString()} >
                             {(provided, snapshot) => (
                                 <div className="droppable-wr"
                                      {...provided.droppableProps}
                                      ref={provided.innerRef}
                                 >
-                                    <div className="draggable-wr">
-                                    <Draggable key={el.id} draggableId={el.id.toString()} index={index}>
+                                    {(arr[1] as Array<Note>).map((el: Note, index: number) =>
+                                    // <div className="draggable-wr" key={el.id}>
+                                    <Draggable  draggableId={el.id.toString()} index={index} key={el.id} >
                                         {(provided, snapshot) => (
                                             <div className="itemsEl" ref={provided.innerRef}
                                                  {...provided.draggableProps}
@@ -38,12 +39,12 @@ const DroppableComponent = () => {
                                             </div>
                                         )}
                                     </Draggable>
-                                    </div>
+                                    // </div>
+                                    )}
                                     {provided.placeholder}
                                 </div>
                             )}
                         </Droppable>
-                    )}
                 </div>
             )}
         </div>

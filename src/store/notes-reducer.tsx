@@ -51,14 +51,13 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
             return copyState
         }
         case "SET_ITEMS": {
-            debugger
             let copyState = {...state}
             let notesCopy = [...state.notes]
             const removed = notesCopy.splice(action.startIndex, 1)
-            console.log(removed);
-            notesCopy.splice(action.endIndex, 0, ...removed)
+            let result = notesCopy
+            result.splice(action.endIndex, 0, ...removed)
+            copyState.notes = result
             return copyState;
-            console.log(copyState);
         }
         default:
             return state;

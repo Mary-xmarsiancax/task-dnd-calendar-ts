@@ -5,13 +5,13 @@
 
 .droppable-el {
     min-width: 20px;
-    min-height: 300px;
+    min-height: 400px;
     background-color: lightgray;
     margin: 25px 5px 0 5px;
     text-align: center;
 }
 
-.draggable-wr {
+.itemsEl {
 background-color: dimgrey;
     min-width: 17px;
     margin: 1px 5px 3px 5px;
