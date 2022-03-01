@@ -22,7 +22,7 @@ const DroppableComponent = () => {
                 <div className="droppable-el" key={arr[0]}>
                     <h4>{DAYS_OF_WEEK[arr[0]]}</h4>
 
-                        <Droppable droppableId={arr[0].toString()} >
+                        <Droppable droppableId={arr[0]} >
                             {(provided, snapshot) => (
                                 <div className="droppable-wr"
                                      {...provided.droppableProps}

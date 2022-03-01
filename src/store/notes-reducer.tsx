@@ -1,12 +1,20 @@
 import {Note} from "../servises/api-types";
 import {notesApi} from "../servises/api";
 import {InferActionsTypes} from "./redux-store";
+import {stat} from "fs";
 
 
 const actions = {
     setNotes: (notes: Array<Note>) => ({type: "SET_NOTES", notes} as const),
     setItems: (startIndex: number, endIndex: number) => ({type: "SET_ITEMS", startIndex, endIndex} as const),
-    setColumn: (result: any) => ({type: "SET_COLUMN", result} as const)
+    setItemToNewColumn: (sourceDroppableId: string, sourceIndex: number, destinationDroppableId: string, destinationIndex: number) =>
+        ({
+            type: "SET_ITEM_TO_NEW_COLUMN",
+            sourceDroppableId,
+            sourceIndex,
+            destinationDroppableId,
+            destinationIndex
+        } as const)
 }
 type NotesActionsType = InferActionsTypes<typeof actions>
 
@@ -59,6 +67,16 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
             copyState.notes = result
             return copyState;
         }
+        case "SET_ITEM_TO_NEW_COLUMN": {
+            let copyState = {...state}
+            const sourceColumn = [...copyState[action.sourceDroppableId as keyof NotesState]];
+            const destColumn = [...copyState[action.destinationDroppableId as keyof NotesState]];
+            const [removed] = sourceColumn.splice(action.sourceIndex, 1);
+            destColumn.splice(action.destinationIndex, 0, removed);
+            copyState[action.sourceDroppableId as keyof NotesState] = sourceColumn;
+            copyState[action.destinationDroppableId as keyof NotesState] = destColumn;
+            return copyState;
+        }
         default:
             return state;
     }
@@ -85,29 +103,9 @@ export const getNotes = () => (dispatch: any) => {
 export const setItems = (startIndex: number, endIndex: number) => (dispatch: any) => {
     dispatch(actions.setItems(startIndex, endIndex))
 }
-export const setColumn = (result: any) => (dispatch: any) => {
-    // const {source, destination} = result;
-    // const sourceColumn = columns[source.droppableId];
-    // console.log("sourceColumn", sourceColumn);
-    // const destColumn = columns[destination.droppableId];
-    // console.log("destColumn", destColumn);
-    // const sourceItems = [...sourceColumn.items];
-    // console.log("sourceItems", sourceItems);
-    // const destItems = [...destColumn.items];
-    // console.log("destItems", destItems);
-    // const [removed] = sourceItems.splice(source.index, 1);
-    // destItems.splice(destination.index, 0, removed);
-    // setColumns({
-    //     ...columns,
-    //     [source.droppableId]: {
-    //         ...sourceColumn,
-    //         items: sourceItems
-    //     },
-    //     [destination.droppableId]: {
-    //         ...destColumn,
-    //         items: destItems
-    //     }
-    // });
-    // dispatch(actions.setColumn())
-}
+export const setColumn = (sourceDroppableId: string, sourceIndex: number,
+                          destinationDroppableId: string, destinationIndex: number) =>
+    (dispatch: any) => {
+        dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex))
+    }
 export default notesReducer;

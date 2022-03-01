@@ -9,18 +9,17 @@ const DndContextComponent = () => {
     const dispatch = useDispatch()
 
     const onDragEnd = (result: any) => {
-        console.log("result.destination",result.destination);
         if (!result.destination) {
             return;
         }
 
-        // if (result.source.droppableId !== result.destination.droppableId) {
-        //     dispatch(setColumn(result))
-        // }
+        if (result.source.droppableId !== result.destination.droppableId) {
+            dispatch(setColumn(result.source.droppableId, result.source.index,
+                result.destination.droppableId, result.destination.index))
+        }
         else {
             dispatch(setItems(result.source.index, result.destination.index))
         }
-        console.log("result", result);
     }
 
     return (
