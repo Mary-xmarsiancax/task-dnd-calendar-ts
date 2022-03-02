@@ -15,6 +15,7 @@ const TasksContent = () => {
 
     const onAddTask = (text: string):void => {
         dispatch(setNewTask(text))
+        setInputsText("")
     }
 
     return (

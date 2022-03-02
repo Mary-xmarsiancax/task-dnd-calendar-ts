@@ -8,13 +8,13 @@ import {DAYS_OF_WEEK, getNotes, NotesState} from "../../../store/notes-reducer";
 
 const DroppableComponent = () => {
     const state = useSelector<AppState>((state): NotesState=> state.notesStore) as NotesState;
-    const username = useSelector<AppState>((state) => state.authStore.username) as string;
+    // const username = useSelector<AppState>((state) => state.authStore.username) as string;
     let dispatch = useDispatch()
     useEffect(() => {
         if (localStorage.getItem("token")) {
             dispatch(getNotes())
         }
-    }, [username])
+    }, [])
 
     return (
         <div className="droppable-component-wr" >

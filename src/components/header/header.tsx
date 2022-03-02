@@ -6,7 +6,6 @@ import {usersApi} from "../../servises/api";
 import {getCurrentUsersData} from "../../store/auth-reducer";
 import {Button} from "@mui/material";
 import {useEffect} from "react";
-import {getNotes} from "../../store/notes-reducer";
 
 
 const Header = () => {
