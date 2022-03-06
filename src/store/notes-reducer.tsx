@@ -1,7 +1,6 @@
 import {Note} from "../servises/api-types";
 import {notesApi} from "../servises/api";
 import {InferActionsTypes} from "./redux-store";
-import {stat} from "fs";
 
 
 const actions = {
@@ -26,7 +25,8 @@ type Wednesday = { wednesday: Array<Note> }
 type Thursday = { thursday: Array<Note> }
 type Friday = { friday: Array<Note> }
 type Saturday = { saturday: Array<Note> }
-export type NotesState = Notes & Sunday & Monday & Tuesday & Wednesday & Thursday & Friday & Saturday
+type Delete = { delete: Array<Note> }
+export type NotesState = Notes & Sunday & Monday & Tuesday & Wednesday & Thursday & Friday & Saturday & Delete
 
 export const DAYS_OF_WEEK: Record<string, string> = {
     notes: "Задания:",
@@ -37,7 +37,7 @@ export const DAYS_OF_WEEK: Record<string, string> = {
     friday: "Пятница",
     saturday: "Суббота",
     sunday: "Воскресенье",
-
+    delete: ""
 }
 
 let initialState: NotesState = {
@@ -48,14 +48,28 @@ let initialState: NotesState = {
     thursday: [],
     friday: [],
     saturday: [],
-    sunday: []
+    sunday: [],
+    delete: [],
 }
 
 const notesReducer = (state = initialState, action: NotesActionsType) => {
     switch (action.type) {
         case "SET_NOTES": {
             let copyState = {...state}
-            copyState.notes = action.notes
+            copyState = action.notes.reduce((acc, curr) => {
+               acc[curr.label].push(curr)
+                return acc
+            },{
+                notes: [],
+                monday: [],
+                tuesday: [],
+                wednesday: [],
+                thursday: [],
+                friday: [],
+                saturday: [],
+                sunday: [],
+                delete: [],
+            } as any)
             return copyState
         }
         case "SET_ITEMS": {
@@ -84,11 +98,12 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
 
 //thunks
 
-export const setNewTask = (text: string) => (dispatch: any) => {
-    notesApi.setNotes(text)
+export const setNewTask = (text: string, label: string) => (dispatch: any) => {
+    notesApi.setNotes(text, label)
         .then(response => {
             notesApi.getNotes()
                 .then(response => {
+                    console.log("resp after getNotes", response);
                     dispatch(actions.setNotes(response.data))
                 })
         })
@@ -97,7 +112,15 @@ export const getNotes = () => (dispatch: any) => {
     notesApi.getNotes()
         .then(response => {
             dispatch(actions.setNotes(response.data))
-
+        })
+}
+export const deleteNote = (id: number) => (dispatch: any) => {
+    notesApi.deleteNotes(id)
+        .then(response => {
+            notesApi.getNotes()
+                .then(response => {
+                    dispatch(actions.setNotes(response.data))
+                })
         })
 }
 export const setItems = (startIndex: number, endIndex: number) => (dispatch: any) => {
@@ -108,4 +131,13 @@ export const setColumn = (sourceDroppableId: string, sourceIndex: number,
     (dispatch: any) => {
         dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex))
     }
+export const updateNote = (id: number, label: string) => (dispatch: any) => {
+    notesApi.updateNotes(id, label)
+        .then(response => {
+            notesApi.getNotes()
+                .then(response => {
+                    dispatch(actions.setNotes(response.data))
+                })
+        })
+}
 export default notesReducer;

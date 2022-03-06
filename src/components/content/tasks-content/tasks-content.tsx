@@ -13,8 +13,8 @@ const TasksContent = () => {
         setInputsText(e.target.value)
     }
 
-    const onAddTask = (text: string):void => {
-        dispatch(setNewTask(text))
+    const onAddTask = (text: string, label: string): void => {
+        dispatch(setNewTask(text, label))
         setInputsText("")
     }
 
@@ -36,14 +36,15 @@ const TasksContent = () => {
                     <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
                     </IconButton>
                     <Divider sx={{height: 28, m: 0.5}} orientation="vertical"/>
-                    <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={()=>onAddTask(inputsText)}>GO
+                    <IconButton color="primary" sx={{p: '10px'}} aria-label="directions"
+                                onClick={() => onAddTask(inputsText,"notes" )}>GO
                     </IconButton>
                 </Paper>
             </div>
             <div className="dnd-wr">
                 <DndContextComponent/>
             </div>
-            
+
         </div>
     )
 }
