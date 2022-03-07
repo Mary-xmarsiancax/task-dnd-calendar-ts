@@ -1,6 +1,6 @@
+import {AxiosResponse} from "axios";
 import {DataFormType} from "../components/registration/registration-form";
 import {AuthData, Note, UserResponseData} from "./api-types";
-import {AxiosResponse} from "axios";
 
 const axios = require("axios");
 

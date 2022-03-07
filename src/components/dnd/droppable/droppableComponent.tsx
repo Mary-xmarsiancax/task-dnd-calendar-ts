@@ -1,10 +1,10 @@
 import {useDispatch, useSelector, useStore} from "react-redux";
 import {Draggable, Droppable} from "react-beautiful-dnd";
-import {Note} from "../../../servises/api-types";
 import "./droppable.css"
 import {AppState} from "../../../store/redux-store";
 import {useEffect} from "react";
 import {DAYS_OF_WEEK, getNotes, NotesState} from "../../../store/notes-reducer";
+import {Note} from "../../../servises/api-types";
 
 
 const DroppableComponent = () => {
