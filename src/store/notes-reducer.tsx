@@ -103,7 +103,6 @@ export const setNewTask = (text: string, label: string) => (dispatch: any) => {
         .then(response => {
             notesApi.getNotes()
                 .then(response => {
-                    console.log("resp after getNotes", response);
                     dispatch(actions.setNotes(response.data))
                 })
         })
