@@ -57,9 +57,11 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
         case "SET_NOTES": {
             let copyState = {...state}
             copyState = action.notes.reduce((acc, curr) => {
-               acc[curr.label].push(curr)
+                acc[curr.label].push(curr)
+                acc[curr.label].sort((a:Note,b:Note)=>{return Number(a.color)-Number(b.color)})
+                //sort((a,b)=>{a.color-b.color})
                 return acc
-            },{
+            }, {
                 notes: [],
                 monday: [],
                 tuesday: [],
@@ -98,8 +100,8 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
 
 //thunks
 
-export const setNewTask = (text: string, label: string) => (dispatch: any) => {
-    notesApi.setNotes(text, label)
+export const setNewTask = (text: string, droppableId: string, index: number) => (dispatch: any) => {
+    notesApi.setNote(text, droppableId, index)
         .then(response => {
             notesApi.getNotes()
                 .then(response => {
@@ -114,7 +116,7 @@ export const getNotes = () => (dispatch: any) => {
         })
 }
 export const deleteNote = (id: number) => (dispatch: any) => {
-    notesApi.deleteNotes(id)
+    notesApi.deleteNote(id)
         .then(response => {
             notesApi.getNotes()
                 .then(response => {
@@ -130,8 +132,8 @@ export const setColumn = (sourceDroppableId: string, sourceIndex: number,
     (dispatch: any) => {
         dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex))
     }
-export const updateNote = (id: number, label: string) => (dispatch: any) => {
-    notesApi.updateNotes(id, label)
+export const updateNote = (id: number, droppableId: string, index: number) => (dispatch: any) => {
+    notesApi.updateNotes(id, droppableId, index)
         .then(response => {
             notesApi.getNotes()
                 .then(response => {

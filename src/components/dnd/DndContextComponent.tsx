@@ -19,10 +19,12 @@ const DndContextComponent = () => {
             if(result.destination.droppableId === "delete"){
                 dispatch(deleteNote(result.draggableId))
             }
-             dispatch(updateNote(result.draggableId,result.destination.droppableId))
+            console.log(result);
+            dispatch(updateNote(result.draggableId,result.destination.droppableId,result.destination.index))
         }
         else {
             dispatch(setItems(result.source.index, result.destination.index))
+            // dispatch(updateNote(result.draggableId,result.destination.droppableId,result.destination.index))
         }
     }
 
