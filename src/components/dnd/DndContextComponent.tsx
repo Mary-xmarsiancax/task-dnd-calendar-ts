@@ -12,18 +12,20 @@ const DndContextComponent = () => {
         if (!result.destination) {
             return;
         }
-
         if (result.source.droppableId !== result.destination.droppableId) {
             if(result.destination.droppableId === "delete"){
                 dispatch(deleteNote(result.draggableId))
             } else{
                 dispatch(setColumn(result.source.droppableId, result.source.index,
                     result.destination.droppableId, result.destination.index))
-                dispatch(updateNote(result.draggableId,result.destination.droppableId,result.destination.index))
+                 dispatch(updateNote(result.draggableId,result.destination.droppableId))
+                 //dispatch(updateNotesIndex(index)
             }
         }
         else {
-            dispatch(setItems(result.source.index, result.destination.index))
+            console.log(result);
+            dispatch(setItems(result.source.index, result.destination.index, result.source.droppableId))
+            //dispatch(updateNotes(result.draggableId,result.destination.droppableId,result.destination.index))
             // dispatch(updateNote(result.draggableId,result.destination.droppableId,result.destination.index))
         }
     }

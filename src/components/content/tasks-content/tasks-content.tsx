@@ -15,14 +15,14 @@ const TasksContent = () => {
         setInputsText(e.target.value)
     }
 
-    const onAddTask = (text: string, droppableId: string, index: number): void => {
-        dispatch(setNewTask(text, droppableId, index))
+    const onAddTask = (text: string, droppableId: string): void => {
+        dispatch(setNewTask(text, droppableId))
         setInputsText("")
     }
 
     const onSubmitAddTask = (e: FormEvent<HTMLDivElement>): void => {
         e.preventDefault()
-        onAddTask(inputsText, "notes", notes.length)
+        onAddTask(inputsText, "notes")
         setInputsText("")
     }
 
@@ -45,7 +45,7 @@ const TasksContent = () => {
                     </IconButton>
                     <Divider sx={{height: 28, m: 0.5}} orientation="vertical"/>
                     <IconButton color="primary" sx={{p: '10px'}} aria-label="directions"
-                                onClick={() => onAddTask(inputsText, "notes", notes.length)}>GO
+                                onClick={() => onAddTask(inputsText, "notes")}>GO
                     </IconButton>
                 </Paper>
             </div>

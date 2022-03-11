@@ -42,11 +42,12 @@ export const notesApi = {
     getNotes(): Promise<AxiosResponse<Array<Note>>> {
         return instance.get(`/notes`)//:Array<ResponsesNotesGet>
     },
-    setNote(text: string, droppableId: string, index: number): Promise<Note> {
-        return instance.post(`/notes`, {text: text, label: droppableId, color: index.toString()})
+    setNote(text: string, droppableId: string): Promise<Note> {
+        return instance.post(`/notes`, {text: text, label: droppableId})
     },
-    updateNotes(id: number, droppableId: string, index:number): Promise<AxiosResponse<Note>> {
-        return instance.put(`/notes`, {id: id, label: droppableId, color: index.toString()})
+    updateNote(id: number, droppableId: string): Promise<AxiosResponse<Note>> {
+        return instance.put(`/notes`, {id: id, label: droppableId})
+        //, color: index.toString()
     },
     deleteNote(id: number): Promise<void> {
         return instance.delete(`/notes?id=${id}`)
