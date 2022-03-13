@@ -8,12 +8,13 @@ import {Note} from "../../../servises/api-types";
 
 const DroppableComponent = () => {
     const state = useSelector<AppState>((state): NotesState=> state.notesStore) as NotesState;
+    const userName = useSelector<AppState>((state) => state.authStore.username) as string;
     let dispatch = useDispatch()
     useEffect(() => {
         if (localStorage.getItem("token")) {
             dispatch(getNotes())
         }
-    }, [])
+    }, [userName])
 
     return (
         <div className="droppable-component-wr" >
@@ -37,7 +38,6 @@ const DroppableComponent = () => {
                                             </div>
                                         )}
                                     </Draggable>
-                                    // </div>
                                     )}
                                     {provided.placeholder}
                                 </div>
