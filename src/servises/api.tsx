@@ -45,8 +45,8 @@ export const notesApi = {
     setNote(text: string, droppableId: string): Promise<Note> {
         return instance.post(`/notes`, {text: text, label: droppableId})
     },
-    updateNoteDroppable(id: number, droppableId: string): Promise<AxiosResponse<Note>> {
-        return instance.put(`/notes`, {id: id, label: droppableId})
+    updateNoteDroppableAndIndex(id: number, droppableId: string, index: number): Promise<AxiosResponse<Note>> {
+        return instance.put(`/notes`, {id: id, label: droppableId,color: index.toString()})
     },
     updateNoteIndex(id: number, index: number): Promise<AxiosResponse<Note>> {
         return instance.put(`/notes`, {id: id, color: index.toString()})

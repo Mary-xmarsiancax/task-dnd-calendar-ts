@@ -11,13 +11,15 @@ const actions = {
         endIndex,
         sourceDroppableId
     } as const),
-    setItemToNewColumn: (sourceDroppableId: string, sourceIndex: number, destinationDroppableId: string, destinationIndex: number) =>
+    setItemToNewColumn: (sourceDroppableId: string, sourceIndex: number, destinationDroppableId: string, destinationIndex: number,
+                         draggableId:number) =>
         ({
             type: "SET_ITEM_TO_NEW_COLUMN",
             sourceDroppableId,
             sourceIndex,
             destinationDroppableId,
-            destinationIndex
+            destinationIndex,
+            draggableId
         } as const)
 }
 type NotesActionsType = InferActionsTypes<typeof actions>
@@ -87,7 +89,6 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
             let result = columnCopy
             result.splice(action.endIndex, 0, ...removed)
             copyState[action.sourceDroppableId as keyof NotesState] = result
-            // updateNotesIndex(copyState[action.sourceDroppableId as keyof NotesState])
             Promise.all(copyState[action.sourceDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
                 notesApi.updateNoteIndex(objTask.id, index)
                     .then(response => {
@@ -108,6 +109,26 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
             destColumn.splice(action.destinationIndex, 0, removed);
             copyState[action.sourceDroppableId as keyof NotesState] = sourceColumn;
             copyState[action.destinationDroppableId as keyof NotesState] = destColumn;
+            Promise.all(copyState[action.sourceDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
+                notesApi.updateNoteDroppableAndIndex(objTask.id,action.sourceDroppableId, index)
+                    .then(response => {
+                    })
+            }))
+                .then(resp => {
+                    Promise.all(copyState[action.destinationDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
+                        notesApi.updateNoteDroppableAndIndex(objTask.id,action.destinationDroppableId, index)
+                            .then(response => {
+                            })
+                    }))
+                        .then(resp => {
+
+                            }
+                        )
+                    }
+                )
+            // notesApi.updateNoteDroppableAndIndex(action.draggableId, action.destinationDroppableId, index)
+            //     .then(response => {
+            //     })
             return copyState;
         }
         default:
@@ -145,37 +166,8 @@ export const setItems = (startIndex: number, endIndex: number, sourceDroppableId
     dispatch(actions.setItems(startIndex, endIndex, sourceDroppableId))
 }
 export const setColumn = (sourceDroppableId: string, sourceIndex: number,
-                          destinationDroppableId: string, destinationIndex: number) =>
+                          destinationDroppableId: string, destinationIndex: number,draggableId:number) =>
     (dispatch: any) => {
-        dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex))
+        dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex,draggableId))
     }
-export const updateNoteDroppable = (id: number, droppableId: string) => (dispatch: any) => {
-    notesApi.updateNoteDroppable(id, droppableId)
-        .then(response => {
-            // notesApi.getNotes()
-            //     .then(response => {
-            //         dispatch(actions.setNotes(response.data))
-            //     })
-        })
-}
-const updateNotesIndex = (stateOfDroppableId: any) => (dispatch: any) => {
-    console.log("я попадаю в санку");
-    Promise.all(stateOfDroppableId.map((objTask: Note, index: number) => {
-        notesApi.updateNoteIndex(objTask.id, index)
-            .then(response => {
-            })
-    }))
-        .then(resp => {
-                console.log(resp);
-            }
-        )
-}
-//notesApi.updateNote(id, droppableId)
-//     .then(response => {
-//                 notesApi.getNotes()
-//                     .then(response => {
-//                         dispatch(actions.setNotes(response.data))
-//                     })
-//             })
-//     }
 export default notesReducer;

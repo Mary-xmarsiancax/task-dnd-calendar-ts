@@ -1,6 +1,6 @@
 import {DragDropContext} from "react-beautiful-dnd";
 import {useDispatch} from "react-redux";
-import {deleteNote, setColumn, setItems, updateNoteDroppable} from "../../store/notes-reducer";
+import {deleteNote, setColumn, setItems} from "../../store/notes-reducer";
 import "./dnd-context-component.css"
 import DroppableComponent from "./droppable/droppableComponent";
 
@@ -17,14 +17,10 @@ const DndContextComponent = () => {
                 dispatch(deleteNote(result.draggableId))
             } else {
                 dispatch(setColumn(result.source.droppableId, result.source.index,
-                    result.destination.droppableId, result.destination.index))
-                dispatch(updateNoteDroppable(result.draggableId, result.destination.droppableId))
-                //dispatch(updateNotesIndex(index)
+                    result.destination.droppableId, result.destination.index,result.draggableId))
             }
         } else {
             dispatch(setItems(result.source.index, result.destination.index, result.source.droppableId))
-            // dispatch(updateNotesIndex(result.destination.droppableId, state))
-            // dispatch(updateNote(result.draggableId,result.destination.droppableId,result.destination.index))
         }
     }
 
