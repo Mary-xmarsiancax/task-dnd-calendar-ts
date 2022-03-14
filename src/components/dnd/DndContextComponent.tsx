@@ -13,11 +13,10 @@ const DndContextComponent = () => {
             return;
         }
         if (result.source.droppableId !== result.destination.droppableId) {
+            dispatch(setColumn(result.source.droppableId, result.source.index,
+                result.destination.droppableId, result.destination.index, result.draggableId))
             if (result.destination.droppableId === "delete") {
                 dispatch(deleteNote(result.draggableId))
-            } else {
-                dispatch(setColumn(result.source.droppableId, result.source.index,
-                    result.destination.droppableId, result.destination.index,result.draggableId))
             }
         } else {
             dispatch(setItems(result.source.index, result.destination.index, result.source.droppableId))

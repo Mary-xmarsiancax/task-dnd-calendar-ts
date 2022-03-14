@@ -12,7 +12,7 @@ const actions = {
         sourceDroppableId
     } as const),
     setItemToNewColumn: (sourceDroppableId: string, sourceIndex: number, destinationDroppableId: string, destinationIndex: number,
-                         draggableId:number) =>
+                         draggableId: number) =>
         ({
             type: "SET_ITEM_TO_NEW_COLUMN",
             sourceDroppableId,
@@ -20,8 +20,10 @@ const actions = {
             destinationDroppableId,
             destinationIndex,
             draggableId
-        } as const)
+        } as const),
+    deleteNote: (id: number) => ({type: "DELETE_NOTE", id} as const)
 }
+
 type NotesActionsType = InferActionsTypes<typeof actions>
 
 type Notes = { notes: Array<Note> }
@@ -109,26 +111,35 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
             destColumn.splice(action.destinationIndex, 0, removed);
             copyState[action.sourceDroppableId as keyof NotesState] = sourceColumn;
             copyState[action.destinationDroppableId as keyof NotesState] = destColumn;
-            Promise.all(copyState[action.sourceDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
-                notesApi.updateNoteDroppableAndIndex(objTask.id,action.sourceDroppableId, index)
-                    .then(response => {
-                    })
-            }))
-                .then(resp => {
-                    Promise.all(copyState[action.destinationDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
-                        notesApi.updateNoteDroppableAndIndex(objTask.id,action.destinationDroppableId, index)
-                            .then(response => {
-                            })
-                    }))
-                        .then(resp => {
+            if(action.destinationDroppableId !== "delete"){
+                Promise.all(copyState[action.sourceDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
+                    notesApi.updateNoteDroppableAndIndex(objTask.id, action.sourceDroppableId, index)
+                        .then(response => {
+                        })
+                }))
+                    .then(resp => {
+                            Promise.all(copyState[action.destinationDroppableId as keyof NotesState].map((objTask: Note, index: number) => {
+                                notesApi.updateNoteDroppableAndIndex(objTask.id, action.destinationDroppableId, index)
+                                    .then(response => {
+                                    })
+                            }))
+                                .then(resp => {
 
-                            }
-                        )
-                    }
-                )
-            // notesApi.updateNoteDroppableAndIndex(action.draggableId, action.destinationDroppableId, index)
-            //     .then(response => {
-            //     })
+                                    }
+                                )
+                        }
+                    )
+            }
+            return copyState;
+        }
+        case "DELETE_NOTE": {
+            let copyState = {...state}
+            let copyDeleteArr = [...copyState["delete" as keyof NotesState]]
+            copyDeleteArr = []
+            copyState["delete" as keyof NotesState] = copyDeleteArr
+            notesApi.deleteNote(action.id)
+                .then(response => {
+                })
             return copyState;
         }
         default:
@@ -154,20 +165,14 @@ export const getNotes = () => (dispatch: any) => {
         })
 }
 export const deleteNote = (id: number) => (dispatch: any) => {
-    notesApi.deleteNote(id)
-        .then(response => {
-            notesApi.getNotes()
-                .then(response => {
-                    dispatch(actions.setNotes(response.data))
-                })
-        })
+    dispatch(actions.deleteNote(id))
 }
 export const setItems = (startIndex: number, endIndex: number, sourceDroppableId: string) => (dispatch: any) => {
     dispatch(actions.setItems(startIndex, endIndex, sourceDroppableId))
 }
 export const setColumn = (sourceDroppableId: string, sourceIndex: number,
-                          destinationDroppableId: string, destinationIndex: number,draggableId:number) =>
+                          destinationDroppableId: string, destinationIndex: number, draggableId: number) =>
     (dispatch: any) => {
-        dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex,draggableId))
+        dispatch(actions.setItemToNewColumn(sourceDroppableId, sourceIndex, destinationDroppableId, destinationIndex, draggableId))
     }
 export default notesReducer;
