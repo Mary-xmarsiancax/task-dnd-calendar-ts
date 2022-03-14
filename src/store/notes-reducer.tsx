@@ -149,8 +149,8 @@ const notesReducer = (state = initialState, action: NotesActionsType) => {
 
 //thunks
 
-export const setNewTask = (text: string, droppableId: string) => (dispatch: any) => {
-    notesApi.setNote(text, droppableId)
+export const setNewTask = (text: string, droppableId: string, index:number) => (dispatch: any) => {
+    notesApi.setNote(text, droppableId, index)
         .then(response => {
             notesApi.getNotes()
                 .then(response => {

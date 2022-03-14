@@ -16,7 +16,7 @@ const TasksContent = () => {
     }
 
     const onAddTask = (text: string, droppableId: string): void => {
-        dispatch(setNewTask(text, droppableId))
+        dispatch(setNewTask(text, droppableId, notes.length))
         setInputsText("")
     }
 
@@ -29,7 +29,7 @@ const TasksContent = () => {
     return (
         <div className="tasks-wr">
             <div className="input-text" onSubmit={onSubmitAddTask}>
-                < Paper className="tasks-input"
+                <Paper className="tasks-input"
                         component="form"
                         sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: 400}}
                 >
