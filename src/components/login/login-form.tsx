@@ -4,14 +4,16 @@ import "./login-form.css"
 import {DataFormType} from "../registration/registration-form";
 import {usersApi} from "../../servises/api";
 import {setUsersData} from "../../store/auth-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AppState} from "../../store/redux-store";
 
 const LoginForm = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<DataFormType>()
     const dispatch = useDispatch()
+    let error = useSelector<AppState>(state => state.authStore.registrationTextError) as string;
 
     const onSubmit = (data: DataFormType): void => {
-        dispatch(setUsersData(data, usersApi.usersLogin))
+        dispatch(setUsersData(data, usersApi.usersLogin, "loginType"))
     }
 
     return (
@@ -28,11 +30,11 @@ const LoginForm = () => {
                 </div>
                 <div className="userNameErrorsSpan">
                     {errors.username && errors.username.type === "required" &&
-                    <Alert severity="info">This is required</Alert>}
+                    <Alert severity="info">Поле, бязательное для заполнения</Alert>}
                     {errors.username && errors.username.type === "maxLength" &&
-                    <Alert severity="info">Max length exceeded</Alert>}
+                    <Alert severity="info">Максимальная длина вводимого текста превышена</Alert>}
                     {errors.username && errors.username.type === "minLength" &&
-                    <Alert severity="info">Min length not reached</Alert>}
+                    <Alert severity="info">Минимальная длина вводимого текста составляет 3 символа</Alert>}
                 </div>
                 <div className="password">
                     <TextField id="password" label="password" variant="outlined"
@@ -46,19 +48,16 @@ const LoginForm = () => {
                 </div>
                 <div className="passwordErrorsSpan">
                     {errors.password && errors.password.type === "required" &&
-                    <Alert severity="info">This is required</Alert>}
+                    <Alert severity="info">Поле, бязательное для заполнения</Alert>}
                     {errors.password && errors.password.type === "maxLength" &&
-                    <Alert severity="info">Max length exceeded</Alert>}
+                    <Alert severity="info">Максимальная длина вводимого текста превышена</Alert>}
                     {errors.password && errors.password.type === "minLength" &&
-                    <Alert severity="info">Min length not reached</Alert>}
+                    <Alert severity="info">Минимальная длина вводимого текста составляет 3 символа</Alert>}
                 </div>
                 <div className="repeatPasswordErrorsSpan">
-                    {/*{props.loginTextError &&*/}
-                    {/*<Alert severity="warning">{props.loginTextErrorTextError}</Alert>*/}
-                    {/*}*/}
-                    {/*{!isIdenticalPasswords &&*/}
-                    {/*<Alert className={s.isIdenticalErrorsSpan} severity="warning">This passwords not identical</Alert>*/}
-                    {/*}*/}
+                    {error &&
+                    <Alert severity="warning">{error}</Alert>
+                    }
                 </div>
                 <div className="loginButton">
                     <Button variant="contained" type="submit">

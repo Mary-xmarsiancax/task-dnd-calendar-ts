@@ -1,4 +1,17 @@
-.registration-form-wr button{
+.registration-form-wr button {
     margin-left: 75px;
     margin-top: 10px;
+}
+
+.errorsStyle {
+    max-width: 230px;
+}
+.registration-form-wr .userName {
+    margin: 5px 0 3px 0;
+}
+.registration-form-wr .password {
+    margin:5px 0 3px 0;
+}
+.registration-form-wr .repeatPassword {
+    margin: 5px 0 3px 0;
 }

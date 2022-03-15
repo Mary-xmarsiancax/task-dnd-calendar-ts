@@ -2,25 +2,21 @@ import {AuthData, UserResponseData} from "../servises/api-types";
 import {DataFormType} from "../components/registration/registration-form";
 import {setAuthorizationHeader, usersApi} from "../servises/api";
 import {InferActionsTypes} from "./redux-store";
-import {useNavigate} from "react-router-dom";
 import {AxiosResponse} from "axios";
 
 export const actions = {
     setUsersData: (data: AuthData) => ({type: "SET_REGISTRATION_DATA", data} as const),
     setRegistrationErrorsText: (text: string) => ({type: "SET_REGISTRATION_ERRORS_TEXT", text} as const),
-    setLoginErrorsText: (text: string) => ({type: "SET_LOGIN_ERRORS_TEXT", text} as const)
 }
 type AuthActionsType = InferActionsTypes<typeof actions>
 
 type Errors = {
-    loginTextError: string
     registrationTextError: string
 }
 
 let initialState: AuthData & Errors = {
     id: null,
     username: "",
-    loginTextError: "",
     registrationTextError: ""
 }
 
@@ -38,11 +34,6 @@ const authReducer = (state = initialState, action: AuthActionsType) => {
             copyState.registrationTextError = action.text
             return copyState
         }
-        case "SET_LOGIN_ERRORS_TEXT": {
-            let copyState = {...state}
-            copyState.loginTextError = action.text
-            return copyState
-        }
         default:
             return state;
     }
@@ -50,17 +41,23 @@ const authReducer = (state = initialState, action: AuthActionsType) => {
 }
 
 //thunks
-export const setUsersData = (data: DataFormType, usersApiMethod: (data: DataFormType) => Promise<AxiosResponse<UserResponseData>>) => (dispatch: any) => {
+export const setUsersData = (data: DataFormType, usersApiMethod: (data: DataFormType) => Promise<AxiosResponse<UserResponseData>>,
+                             todoType:string) => (dispatch: any) => {
     usersApiMethod(data)
         .then(response => {
                 let {id, username, token} = response.data;
                 dispatch(actions.setUsersData({id, username}))
                 localStorage.setItem("token", token)
                 setAuthorizationHeader(token)
-                 // navigate("/tasksContent", {replace: true})
             }, error => {
-                let registrationTextError = error.response.data.errors[0]
-                dispatch(actions.setRegistrationErrorsText(registrationTextError))
+                if (todoType === "registerType"){
+                    let registrationTextError = error.response.data.errors[0]
+                    dispatch(actions.setRegistrationErrorsText(registrationTextError))
+                } else {
+                    let registrationTextError = error.response.data.errors.error[0]
+                    dispatch(actions.setRegistrationErrorsText(registrationTextError))
+                }
+
             }
         )
 }
@@ -71,7 +68,7 @@ export const getCurrentUsersData = () => (dispatch: any) => {
             dispatch(actions.setUsersData({id, username}))
         }, err => {
             setAuthorizationHeader("");
-             // navigate('/login', {replace: true})
+            // navigate('/login', {replace: true})
             dispatch(actions.setUsersData(
                 {
                     id: null,
