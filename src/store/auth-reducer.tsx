@@ -7,17 +7,22 @@ import {AxiosResponse} from "axios";
 export const actions = {
     setUsersData: (data: AuthData) => ({type: "SET_REGISTRATION_DATA", data} as const),
     setRegistrationErrorsText: (text: string) => ({type: "SET_REGISTRATION_ERRORS_TEXT", text} as const),
+    setLoading: (loadingStatus: boolean) => ({type: "SET_LOADING", loadingStatus} as const),
 }
 type AuthActionsType = InferActionsTypes<typeof actions>
 
 type Errors = {
     registrationTextError: string
 }
+type IsLoading = {
+    isLoading: boolean
+}
 
-let initialState: AuthData & Errors = {
+let initialState: AuthData & Errors & IsLoading = {
     id: null,
     username: "",
-    registrationTextError: ""
+    registrationTextError: "",
+    isLoading: false
 }
 
 const authReducer = (state = initialState, action: AuthActionsType) => {
@@ -34,6 +39,11 @@ const authReducer = (state = initialState, action: AuthActionsType) => {
             copyState.registrationTextError = action.text
             return copyState
         }
+        case "SET_LOADING": {
+            let copyState = {...state}
+            copyState.isLoading = action.loadingStatus;
+            return copyState
+        }
         default:
             return state;
     }
@@ -42,15 +52,18 @@ const authReducer = (state = initialState, action: AuthActionsType) => {
 
 //thunks
 export const setUsersData = (data: DataFormType, usersApiMethod: (data: DataFormType) => Promise<AxiosResponse<UserResponseData>>,
-                             todoType:string) => (dispatch: any) => {
+                             todoType: string) => (dispatch: any) => {
+    dispatch(actions.setLoading(true))
     usersApiMethod(data)
         .then(response => {
+                dispatch(actions.setLoading(false))
                 let {id, username, token} = response.data;
                 dispatch(actions.setUsersData({id, username}))
                 localStorage.setItem("token", token)
                 setAuthorizationHeader(token)
             }, error => {
-                if (todoType === "registerType"){
+                dispatch(actions.setLoading(false))
+                if (todoType === "registerType") {
                     let registrationTextError = error.response.data.errors[0]
                     dispatch(actions.setRegistrationErrorsText(registrationTextError))
                 } else {
@@ -62,12 +75,15 @@ export const setUsersData = (data: DataFormType, usersApiMethod: (data: DataForm
         )
 }
 export const getCurrentUsersData = () => (dispatch: any) => {
+    dispatch(actions.setLoading(true))
     usersApi.getCurrentUser()
         .then(response => {
+            dispatch(actions.setLoading(false))
             let {id, username} = response.data;
             dispatch(actions.setUsersData({id, username}))
         }, err => {
             setAuthorizationHeader("");
+            dispatch(actions.setLoading(false))
             // navigate('/login', {replace: true})
             dispatch(actions.setUsersData(
                 {

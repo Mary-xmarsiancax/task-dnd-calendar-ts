@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/redux-store";
 import {usersApi} from "../../servises/api";
-import {getCurrentUsersData} from "../../store/auth-reducer";
+import {actions, getCurrentUsersData} from "../../store/auth-reducer";
 import {Button} from "@mui/material";
 import {useEffect} from "react";
 

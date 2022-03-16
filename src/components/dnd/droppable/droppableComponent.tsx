@@ -5,6 +5,7 @@ import {AppState} from "../../../store/redux-store";
 import {useEffect} from "react";
 import {DAYS_OF_WEEK, getNotes, NotesState} from "../../../store/notes-reducer";
 import {Note} from "../../../servises/api-types";
+import {actions} from "../../../store/auth-reducer";
 
 const DroppableComponent = () => {
     const state = useSelector<AppState>((state): NotesState=> state.notesStore) as NotesState;
