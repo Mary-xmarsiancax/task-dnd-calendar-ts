@@ -2,8 +2,13 @@
     background-color: rgb(224 243 249)
 }
 
+.start-page-wr .registrationImg{
+    min-height: 491px;
+}
+
 .start-page-wr img {
     margin-left: 370px;
+    height: 100%;
 }
 
 .start-page-wr .motto {

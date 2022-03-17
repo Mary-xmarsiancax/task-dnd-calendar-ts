@@ -1,12 +1,11 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux"
-import {composeWithDevTools} from "redux-devtools-extension";
-import notesReducer, {NotesState} from "./notes-reducer"
+import notesReducer from "./notes-reducer"
 import authReducer from "./auth-reducer"
 import thunk from 'redux-thunk'
 
 let rootReducer = combineReducers({
     notesStore: notesReducer,
-    authStore: authReducer
+    authStore: authReducer,
 })
 
 type RootReducer = typeof rootReducer;

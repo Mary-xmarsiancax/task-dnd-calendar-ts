@@ -3,11 +3,13 @@ import LoginForm from "./login-form";
 import "./login.css"
 
 const Login = () => {
-    return(
+    return (
         <div>
             <div className="registration-wr">
+                <div className="registrationImg">
+                    <img src={registrationImg} alt="many cases "/>
+                </div>
 
-                <img src={registrationImg} alt="many cases "/>
                 <div className="motto"><h1>КАК НИЧЕГО НЕ ЗАБЫТЬ И НЕ СОЙТИ С УМА</h1></div>
                 <div className="registration-form-block">
                     <LoginForm/>

@@ -1,9 +1,13 @@
 .registration-wr {
     position: relative;
 }
+.registration-wr .registrationImg{
+   min-height: 491px;
+}
 
 .registration-wr img {
     margin-left: 350px;
+    height: 100%;
 }
 
 .registration-wr .motto {
