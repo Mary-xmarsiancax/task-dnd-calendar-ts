@@ -1,12 +1,20 @@
 import registrationImg from "../../img/start-img.jpg";
 import "./registration.css"
 import RegistrationForm from "./registration-form";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/redux-store";
 import Preloader from "../preloader/preloader";
+import {useEffect} from "react";
+import {actions} from "../../store/auth-reducer";
 
 const Registration = () => {
-    const isLoading = useSelector<AppState>((state) => state.authStore.isLoading)as string;
+    const registrationTextError = useSelector<AppState>((state) => state.authStore.registrationTextError)as string;
+    let dispatch = useDispatch()
+    useEffect(() => {
+        if(registrationTextError){
+            dispatch(actions.setRegistrationErrorsText(""))
+        }
+    }, [])
     return (
         <div>
             <div className="registration-wr">

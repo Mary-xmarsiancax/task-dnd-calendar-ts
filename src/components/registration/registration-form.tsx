@@ -1,7 +1,7 @@
 import {Alert, Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import "./registration-form.css"
-import {setUsersData} from "../../store/auth-reducer";
+import {actions, setUsersData} from "../../store/auth-reducer";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {usersApi} from "../../servises/api";
@@ -14,6 +14,7 @@ const RegistrationForm = () => {
     let error = useSelector<AppState>(state => state.authStore.registrationTextError) as string;
     const {register, handleSubmit, formState: {errors}} = useForm<DataFormType>()
     const [isIdenticalPasswords, setNotIdentical] = useState(true)
+
     const onSubmit = (data: DataFormType): void => {
         if (data.password === data.repeatPassword) {
             dispatch(setUsersData(data, usersApi.usersRegistration, "registerType"));
@@ -21,11 +22,19 @@ const RegistrationForm = () => {
             setNotIdentical(false)
         }
     }
+
+    const deleteError = () => {
+        dispatch(actions.setRegistrationErrorsText(""))
+        if(!isIdenticalPasswords){
+            setNotIdentical(true)
+        }
+    }
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className="registration-form-wr">
                 <div className="userName">
-                    <TextField id="username" label="username" variant="outlined"  {...register("username",
+                    <TextField onFocus={deleteError} id="username" label="username" variant="outlined"  {...register("username",
                         {
                             required: true,
                             maxLength: 25,
@@ -44,7 +53,7 @@ const RegistrationForm = () => {
                         символа</Alert>}
                 </div>
                 <div className="password">
-                    <TextField id="password" label="password" variant="outlined"
+                    <TextField onFocus={deleteError} id="password" label="password" variant="outlined"
                                type="password" {...register("password",
                         {
                             required: true,
@@ -64,7 +73,7 @@ const RegistrationForm = () => {
                         символа</Alert>}
                 </div>
                 <div className="repeatPassword">
-                    <TextField id="repeatPassword" label="repeat password" variant="outlined"
+                    <TextField onFocus={deleteError} id="repeatPassword" label="repeat password" variant="outlined"
                                type="password" {...register("repeatPassword",
                         {
                             required: true,
@@ -83,12 +92,12 @@ const RegistrationForm = () => {
                     <Alert className="errorsStyle" severity="info">Минимальная длина вводимого текста составляет 3
                         символа</Alert>}
                     {error &&
-                    <Alert severity="warning">
+                    <Alert className="errorsStyle" severity="warning">
                         {error}
                     </Alert>
                     }
                     {!isIdenticalPasswords &&
-                    <Alert className="isIdenticalErrorsSpan" severity="warning">Пароли не совпадают</Alert>
+                    <Alert className="errorsStyle" severity="warning">Пароли не совпадают</Alert>
                     }
                 </div>
                 <div className="loginButton">
