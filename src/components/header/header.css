@@ -1,5 +1,4 @@
 .header-wr {
-    /*background-color: rgb(224 243 249);*/
     background-color: dimgrey;
     display: flex;
     justify-content: space-between;
@@ -11,8 +10,6 @@
 .header-wr .header-text {
     font-size: medium;
     color: black;
-
-    /*color: dimgrey;*/
 }
 .header-wr .auth-text{
    margin-right: 80px;
@@ -27,14 +24,9 @@
    margin-right: 30px;
 }
 
-.header-wr .header-text-registration {
-    /*margin-left: 20px;*/
-}
-
 .header-wr .link{
     text-decoration: none;
     color: black;
-
 }
 .header-wr .link:hover{
     color: darkgray;

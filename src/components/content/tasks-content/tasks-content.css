@@ -1,6 +1,7 @@
 .tasks-wr .input-text .tasks-input{
     width: 1422px;
     margin-left: 60px;
+    margin-top: 5px;
 }
 .tasks-wr .dnd-wr{
     min-height: 510px;

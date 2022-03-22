@@ -3,8 +3,9 @@ import LoginForm from "./login-form";
 import "./login.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../store/redux-store";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {actions} from "../../store/auth-reducer";
+import Marquee from "react-fast-marquee";
 
 const Login = () => {
     const registrationTextError = useSelector<AppState>((state) => state.authStore.registrationTextError) as string;
@@ -16,6 +17,7 @@ const Login = () => {
     }, [])
     return (
         <div>
+            <Marquee direction="left" speed={150} >Пожалуйста, зарегистрируйтесь или введите пароль, если регистрировались ранее</Marquee>
             <div className="registration-wr">
                 <div className="registrationImg">
                     <img src={registrationImg} alt="many cases "/>

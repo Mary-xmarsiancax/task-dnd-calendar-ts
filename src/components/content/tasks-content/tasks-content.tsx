@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setNewTask} from "../../../store/notes-reducer";
 import DndContextComponent from "../../dnd/DndContextComponent";
 import {AppState} from "../../../store/redux-store";
+import Marquee from "react-fast-marquee";
 
 const TasksContent = () => {
     let [inputsText, setInputsText] = useState("")
@@ -28,6 +29,7 @@ const TasksContent = () => {
 
     return (
         <div className="tasks-wr">
+            <Marquee direction="left" speed={150}>Пожалуйста, перетащите задание в нужное Вам поле</Marquee>
             <div className="input-text" onSubmit={onSubmitAddTask}>
                 <Paper className="tasks-input"
                         component="form"
