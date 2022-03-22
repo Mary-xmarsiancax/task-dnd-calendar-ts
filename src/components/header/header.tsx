@@ -40,19 +40,19 @@ const Header = () => {
                 <span className="header-text header-text-login">
                     {username}
                 </span>
-                    <Button variant="text" className="header-text header-text-registration" onClick={onLogout}>
+                    <Button variant="text" className="header-text header-text-registration link" onClick={onLogout}>
                         ВЫЙТИ
                     </Button>
                 </div>
                 :
                 <div className="auth-text">
                  <span className="header-text header-text-login">
-                <NavLink to="/login">
+                <NavLink to="/login" className="link">
                 ВОЙТИ
                 </NavLink>
             </span>
                     <span className="header-text header-text-registration">
-                <NavLink to="/registration">
+                <NavLink to="/registration" className="link">
                 РЕГИСТРАЦИЯ
                 </NavLink>
             </span>

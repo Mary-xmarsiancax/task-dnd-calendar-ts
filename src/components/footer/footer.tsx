@@ -30,9 +30,9 @@ const Footer = () => {
                     <h5>КОМПАНИЯ</h5>
                     <ol>
                         <li>О нас</li>
-                        <li>Вакансии</li>
-                        <li>Блог</li>
-                        <li>Пресса</li>
+                        <li>xmarsiancax@mail.ru</li>
+                        <li>vk.com/xmarsiancax</li>
+                        <li>Барочкина М.</li>
                     </ol>
                 </div>
             </div>

@@ -1,12 +1,18 @@
 .header-wr {
-    background-color: rgb(224 243 249);
+    /*background-color: rgb(224 243 249);*/
+    background-color: dimgrey;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    margin-bottom: 10px;
 }
 
 .header-wr .header-text {
     font-size: medium;
-    color: dimgrey;
+    color: black;
+
+    /*color: dimgrey;*/
 }
 .header-wr .auth-text{
    margin-right: 80px;
@@ -25,8 +31,12 @@
     /*margin-left: 20px;*/
 }
 
-.header-wr a{
+.header-wr .link{
     text-decoration: none;
-    color: dimgrey;
+    color: black;
+
+}
+.header-wr .link:hover{
+    color: darkgray;
 }
 

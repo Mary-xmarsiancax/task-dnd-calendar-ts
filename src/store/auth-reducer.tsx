@@ -84,7 +84,6 @@ export const getCurrentUsersData = () => (dispatch: any) => {
         }, err => {
             setAuthorizationHeader("");
             dispatch(actions.setLoading(false))
-            // navigate('/login', {replace: true})
             dispatch(actions.setUsersData(
                 {
                     id: null,
