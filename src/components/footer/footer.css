@@ -19,7 +19,9 @@
 .footer-wr .footer-items {
     display: flex;
 }
+.footer-wr .footer-items .footer-item{
+    margin-right:60px;
+}
 
 .footer-wr h5 {
-    text-align: center;
 }

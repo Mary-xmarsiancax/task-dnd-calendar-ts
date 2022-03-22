@@ -29,7 +29,7 @@ const TasksContent = () => {
 
     return (
         <div className="tasks-wr">
-            <Marquee direction="left" speed={150}>Пожалуйста, перетащите задание в нужное Вам поле</Marquee>
+            <Marquee direction="left" speed={150}>Пожалуйста, создайте и перетащите задание в нужное Вам поле</Marquee>
             <div className="input-text" onSubmit={onSubmitAddTask}>
                 <Paper className="tasks-input"
                         component="form"

@@ -1,4 +1,5 @@
 import "./footer.css"
+
 const Footer = () => {
     return (
         <div className="footer-wr">
@@ -6,32 +7,11 @@ const Footer = () => {
                 с помощью To-Do-Calendar
             </div>
             <div className="footer-items">
-                <div>
-                    <h5>ВОЗМОЖНОСТИ</h5>
+                <div className="footer-item">
                     <ol>
-                        <li>Как это работает</li>
-                        <li>Для команд</li>
-                        <li>Тарифы</li>
-                        <li>Шаблоны</li>
-                    </ol>
-                </div>
-                <div>
-                    <h5>РЕСУРСЫ</h5>
-                    <ol>
-                        <li> Скачать приложения</li>
-                        <li>
-                        </li>
-                        <li> Справочный центр</li>
-                        <li> Рассказать друзьям</li>
-                        <li>Партнерская программа</li>
-                    </ol>
-                </div>
-                <div>
-                    <h5>КОМПАНИЯ</h5>
-                    <ol>
-                        <li>О нас</li>
+                        <li><h5>КОНТАКТЫ</h5></li>
                         <li>xmarsiancax@mail.ru</li>
-                        <li>vk.com/xmarsiancax</li>
+                        <li><a href="https://vk.com/xmarsiancax">vk.com/xmarsiancax</a></li>
                         <li>Барочкина М.</li>
                     </ol>
                 </div>
